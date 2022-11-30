@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useMemo} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {ScrollView, StyleSheet} from 'react-native';
 import isEmpty from 'lodash.isempty';
 
 import {Joke} from './Joke';
@@ -58,7 +58,7 @@ export const HistoryJokes = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       {Object.keys(sortedJokes).map(date => {
         const joke = sortedJokes[date];
         return (
@@ -71,7 +71,7 @@ export const HistoryJokes = () => {
           />
         );
       })}
-    </View>
+    </ScrollView>
   );
 };
 
