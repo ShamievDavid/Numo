@@ -1,0 +1,1 @@
+export {HistoryJokes} from './HistoryJokes';
