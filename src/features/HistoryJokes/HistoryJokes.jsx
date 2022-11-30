@@ -56,20 +56,18 @@ export const HistoryJokes = () => {
 
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.jokes}>
-        {Object.keys(jokesList).map(date => {
-          const joke = jokesList[date];
-          return (
-            <Joke
-              key={joke.id}
-              id={joke.id}
-              joke={getJokeText(joke)}
-              liked={joke.liked}
-              onLike={handleLikeJoke}
-            />
-          );
-        })}
-      </View>
+      {Object.keys(jokesList).map(date => {
+        const joke = jokesList[date];
+        return (
+          <Joke
+            key={joke.id}
+            id={joke.id}
+            joke={getJokeText(joke)}
+            liked={joke.liked}
+            onLike={handleLikeJoke}
+          />
+        );
+      })}
     </ScrollView>
   );
 };
@@ -78,8 +76,5 @@ const styles = StyleSheet.create({
   container: {
     height: '100%',
     width: '100%',
-  },
-  jokes: {
-    flexDirection: 'column-reverse',
   },
 });
