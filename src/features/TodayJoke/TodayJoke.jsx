@@ -4,14 +4,14 @@ import isEmpty from 'lodash.isempty';
 
 import {useFetch, useStorage} from '../../hooks';
 import {Spinner, Error, Like} from '../../components';
-import {getJokeUrl, getTodayDate, getJokeText} from '../../utils';
+import {getJokeUrl, getFormattedDateString, getJokeText} from '../../utils';
 import colors from '../../config/colors';
 
 export const TodayJoke = () => {
   const {loadData, data, loading, error} = useFetch();
   const {setToStorage, getFromStorage} = useStorage();
   const [currentJoke, setCurrentJoke] = useState(null);
-  const todayDate = getTodayDate();
+  const todayDate = getFormattedDateString();
   const [isPreparingData, setIsPreparingData] = useState(true);
 
   useEffect(() => {

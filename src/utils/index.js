@@ -1,4 +1,4 @@
 export {getJokeUrl} from './getJokeUrl';
-export {getTodayDate} from './getTodayDate';
+export {getFormattedDateString, getDateFromString} from './date';
 export {getJokeText} from './getJokeText';
 export {getMockedJokes} from './getMockedJokes';

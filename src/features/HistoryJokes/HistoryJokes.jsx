@@ -51,6 +51,7 @@ export const HistoryJokes = () => {
   }
 
   const handleLikeJoke = id => {
+    console.log('jokelistXXX', jokesList);
     setJokesList({
       ...jokesList,
       [id]: {...jokesList[id], liked: !jokesList[id].liked},
