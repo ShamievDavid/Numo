@@ -19,22 +19,29 @@ export const HistoryJokes = () => {
 
   // useEffect(() => {
   //   setMockedData();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, []);
 
   // const setMockedData = async () => {
-  //   setToStorage('history', getMockedJokes());
+  //   await setToStorage('history', getMockedJokes());
   // };
 
   // set updated joke to storage on component unmount
   useEffect(() => {
     return () => {
-      jokesList && !isEmpty(jokesList) && setToStorage('history', jokesList);
+      setJokesListToStorage();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [jokesList]);
 
   useEffect(() => {
     getJokesList();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const setJokesListToStorage = () => {
+    jokesList && !isEmpty(jokesList) && setToStorage('history', jokesList);
+  };
 
   const getJokesList = async () => {
     const jokes = await getFromStorage('history');
@@ -50,11 +57,10 @@ export const HistoryJokes = () => {
     return <NoData />;
   }
 
-  const handleLikeJoke = id => {
-    console.log('jokelistXXX', jokesList);
+  const handleLikeJoke = date => {
     setJokesList({
       ...jokesList,
-      [id]: {...jokesList[id], liked: !jokesList[id].liked},
+      [date]: {...jokesList[date], liked: !jokesList[date].liked},
     });
   };
 
@@ -65,7 +71,7 @@ export const HistoryJokes = () => {
         return (
           <Joke
             key={joke.id}
-            id={joke.id}
+            date={joke.date}
             joke={getJokeText(joke)}
             liked={joke.liked}
             onLike={handleLikeJoke}

@@ -15,18 +15,16 @@ export const TodayJoke = () => {
   const [isPreparingData, setIsPreparingData] = useState(true);
 
   useEffect(() => {
-    const checkHistory = getFromStorage('history');
-  }, []);
-
-  useEffect(() => {
     getTodayJoke();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [todayDate]);
 
   // set updated joke to storage on component unmount
   useEffect(() => {
     return () => {
-      currentJoke && setToStorage('today', currentJoke);
+      setJokeToStorage();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentJoke]);
 
   // update local state with newly loaded joke
@@ -36,18 +34,24 @@ export const TodayJoke = () => {
     }
   }, [data, todayDate]);
 
+  const setJokeToStorage = () => {
+    currentJoke && setToStorage('today', currentJoke);
+  };
+
   // check if today joke saved in storage, if no load it
   const getTodayJoke = async () => {
     const todayJoke = await getFromStorage('today');
 
     if (todayJoke && !isEmpty(todayJoke)) {
       if (todayJoke.date === todayDate) {
-        getJokeFromStorage(todayJoke);
+        setCurrentJoke(todayJoke);
+        setIsPreparingData(false);
       } else {
-        // load new joke
-        await loadJoke();
         // if outdated joke push it to history storage
         await addJokeToHistoryStorage();
+
+        // load new joke
+        await loadJoke();
       }
     } else {
       // load initial joke
@@ -58,11 +62,6 @@ export const TodayJoke = () => {
   const loadJoke = async () => {
     const url = getJokeUrl();
     await loadData(url);
-  };
-
-  const getJokeFromStorage = todayJoke => {
-    setCurrentJoke(todayJoke);
-    setIsPreparingData(false);
   };
 
   const addJokeToHistoryStorage = async () => {
