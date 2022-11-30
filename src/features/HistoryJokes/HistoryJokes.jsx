@@ -1,26 +1,29 @@
-import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, ScrollView} from 'react-native';
+import React, {useEffect, useState, useMemo} from 'react';
+import {View, StyleSheet} from 'react-native';
 import isEmpty from 'lodash.isempty';
 
 import {Joke} from './Joke';
 import {useStorage} from '../../hooks';
 import {Spinner, NoData} from '../../components';
-import {getJokeText} from '../../utils';
-// import {getMockedJokes} from '../../utils';
+import {getJokeText, getMockedJokes} from '../../utils';
+import {getSortedJokes} from './utilities/getSortedJokes';
 
 export const HistoryJokes = () => {
   const [jokesList, setJokesList] = useState(null);
   const [isPreparingData, setIsPreparingData] = useState(true);
+  const sortedJokes = useMemo(
+    () => (jokesList ? getSortedJokes(jokesList) : jokesList),
+    [jokesList],
+  );
   const {setToStorage, getFromStorage} = useStorage();
 
-  // set up mocked jokes in history
-  // useEffect(() => {
-  //   setMockedData();
-  // }, []);
+  useEffect(() => {
+    setMockedData();
+  }, []);
 
-  // const setMockedData = async () => {
-  //   setToStorage('history', getMockedJokes());
-  // };
+  const setMockedData = async () => {
+    setToStorage('history', getMockedJokes());
+  };
 
   // set updated joke to storage on component unmount
   useEffect(() => {
@@ -55,9 +58,9 @@ export const HistoryJokes = () => {
   };
 
   return (
-    <ScrollView style={styles.container}>
-      {Object.keys(jokesList).map(date => {
-        const joke = jokesList[date];
+    <View style={styles.container}>
+      {Object.keys(sortedJokes).map(date => {
+        const joke = sortedJokes[date];
         return (
           <Joke
             key={joke.id}
@@ -68,7 +71,7 @@ export const HistoryJokes = () => {
           />
         );
       })}
-    </ScrollView>
+    </View>
   );
 };
 
