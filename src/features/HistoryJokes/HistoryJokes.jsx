@@ -17,13 +17,13 @@ export const HistoryJokes = () => {
   );
   const {setToStorage, getFromStorage} = useStorage();
 
-  useEffect(() => {
-    setMockedData();
-  }, []);
+  // useEffect(() => {
+  //   setMockedData();
+  // }, []);
 
-  const setMockedData = async () => {
-    setToStorage('history', getMockedJokes());
-  };
+  // const setMockedData = async () => {
+  //   setToStorage('history', getMockedJokes());
+  // };
 
   // set updated joke to storage on component unmount
   useEffect(() => {
