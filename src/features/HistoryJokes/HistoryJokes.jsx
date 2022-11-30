@@ -5,8 +5,9 @@ import isEmpty from 'lodash.isempty';
 import {Joke} from './Joke';
 import {useStorage} from '../../hooks';
 import {Spinner, NoData} from '../../components';
-import {getJokeText, getMockedJokes} from '../../utils';
+import {getJokeText} from '../../utils';
 import {getSortedJokes} from './utilities/getSortedJokes';
+import {getMockedJokes} from './utilities/getMockedJokes';
 
 export const HistoryJokes = () => {
   const [jokesList, setJokesList] = useState(null);
@@ -17,14 +18,14 @@ export const HistoryJokes = () => {
   );
   const {setToStorage, getFromStorage} = useStorage();
 
-  // useEffect(() => {
-  //   setMockedData();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
+  useEffect(() => {
+    setMockedData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  // const setMockedData = async () => {
-  //   await setToStorage('history', getMockedJokes());
-  // };
+  const setMockedData = async () => {
+    await setToStorage('history', getMockedJokes());
+  };
 
   // set updated joke to storage on component unmount
   useEffect(() => {
